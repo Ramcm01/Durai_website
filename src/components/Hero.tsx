@@ -34,9 +34,7 @@ export const Hero: React.FC<HeroProps> = ({
 }) => {
   const { language, t } = useLanguage();
   const [showPayoutTable, setShowPayoutTable] = useState(false);
-  const [heroImage] = useState<string>(() => {
-    return localStorage.getItem('dfinance_hero_image') || '/hero-banner.webp';
-  });
+  const heroImage = '/hero-banner.webp?v=2';
 
   return (
     <div className="relative">

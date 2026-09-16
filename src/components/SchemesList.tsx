@@ -91,7 +91,7 @@ export const SchemesList: React.FC<SchemesListProps> = ({
             {/* Image Side */}
             <div className="lg:col-span-5 relative h-56 sm:h-64 lg:h-72 overflow-hidden bg-slate-900">
               <img
-                src="/hero-banner.webp"
+                src="/hero-banner.webp?v=2"
                 alt="DFinance festival celebration"
                 className="w-full h-full object-cover object-center brightness-90 hover:scale-105 transition-transform duration-700"
               />
