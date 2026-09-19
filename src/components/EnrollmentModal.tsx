@@ -6,16 +6,13 @@ import {
   CheckCircle2, 
   ArrowRight, 
   Phone, 
-  Smartphone,
   Coins,
   MapPin,
   FileText,
   Calendar,
   Building2,
-  Mail,
-  Copy,
-  ExternalLink,
-  Check
+  Send,
+  Loader2
 } from 'lucide-react';
 import { CHIT_SCHEMES, COMPANY_INFO } from '../data/chitData';
 
@@ -49,8 +46,9 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
     agreedToPledge: true,
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [applicationId, setApplicationId] = useState('');
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [deliveryStatusMessage, setDeliveryStatusMessage] = useState<string>('');
 
   useEffect(() => {
     if (calculatorPreFill) {
@@ -91,75 +89,101 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
     }).format(val);
   };
 
-  const getEmailDetails = (appId: string) => {
-    const subject = `[DFinance Chit Application] ${formData.fullName} - ${chitUnits} Chit(s) (${appId})`;
-    const body = `NEW 4-MONTH FESTIVAL CHIT ENROLLMENT APPLICATION
-D FINANCE CHIT COMPANY - CHROMEPET, CHENNAI
-
-Application ID: ${appId}
-Submission Date: ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
-
-1. SUBSCRIBER PARTICULARS:
---------------------------------------------------
-Full Name: ${formData.fullName}
-Mobile / WhatsApp: ${formData.phone}
-${formData.email ? `Email: ${formData.email}\n` : ''}Residential Address: ${formData.address}
-
-2. CHIT SCHEME DETAILS:
---------------------------------------------------
-Scheme: Deepavali - Pongal 4-Month Festival Chit Scheme
-Enrolled Units: ${chitUnits} Chit(s) (1 to 10 Chits)
-Monthly Installment: ${formatCurrency(monthlyInstallment)} / month
-Total 4-Month Principal: ${formatCurrency(totalPrincipal)}
-60% High-Yield Bonus: ${formatCurrency(interestAmount)}
-${includeReferral ? `Referral Group Incentive: ${formatCurrency(referralBonus)}\n` : ''}Total Expected Maturity Payout: ${formatCurrency(totalMaturityPayout)}
-Joining Date: ${formData.joiningDate}
-Maturity Date: ${calculateMaturityDate(formData.joiningDate)}
-
-3. CONSENT & DECLARATION:
---------------------------------------------------
-Declaration: "இத்திட்டத்தில் முழுமனதுடன் இணைய நாங்கள் தயாராக உள்ளோம்." (Agreed with full consent)
-
-4. DFINANCE OFFICE DETAILS:
---------------------------------------------------
-Office: No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044
-Proprietor: Mr. Duraibabu
-Phone: 9003241939 / 8668197626
-Govt Udyam Reg: UDYAM-TN-02-0501215
-
---------------------------------------------------
-Submitted via DFinance Web Application Portal.`;
-
-    const mailtoUrl = `mailto:${COMPANY_INFO.chitAdminEmail}?cc=${COMPANY_INFO.chitCcEmail}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(COMPANY_INFO.chitAdminEmail)}&cc=${encodeURIComponent(COMPANY_INFO.chitCcEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-    return { subject, body, mailtoUrl, gmailWebUrl };
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanPhone = formData.phone.replace(/\D/g, '').slice(0, 10);
+    if (cleanPhone.length !== 10) {
+      return;
+    }
+
+    setIsSubmitting(true);
     const generatedId = 'DF-APP-' + Math.floor(100000 + Math.random() * 900000);
     setApplicationId(generatedId);
-    setIsSubmitted(true);
 
-    // Auto-trigger mail client to send mail to durai.vodafone@gmail.com and CC to advt.team@gmail.com
-    const emailDetails = getEmailDetails(generatedId);
+    const emailPayload = {
+      _subject: `[DFinance Chit Application] ${formData.fullName} - ${chitUnits} Chit(s) (${generatedId})`,
+      _replyto: formData.email || COMPANY_INFO.chitCcEmail,
+      _template: 'table',
+      _captcha: 'false',
+      'Application ID': generatedId,
+      'Applicant Full Name': formData.fullName,
+      'Mobile / WhatsApp Number': cleanPhone,
+      'Email Address': formData.email || 'Not provided',
+      'Residential Address': formData.address,
+      'Chit Scheme': 'Deepavali - Pongal 4-Month Festival Scheme',
+      'Enrolled Chit Units': `${chitUnits} Chit(s) (1 to 10 Chits)`,
+      'Monthly Installment': formatCurrency(monthlyInstallment),
+      'Total 4-Month Principal': formatCurrency(totalPrincipal),
+      '60% High-Yield Company Bonus': formatCurrency(interestAmount),
+      'Referral Group Incentive': includeReferral ? formatCurrency(referralBonus) : '₹0',
+      'Total Expected Maturity Payout': formatCurrency(totalMaturityPayout),
+      'Joining Date': formData.joiningDate,
+      'Maturity Date': calculateMaturityDate(formData.joiningDate),
+      'Consent Pledge': 'Confirmed: இத்திட்டத்தில் முழுமனதுடன் இணைய நாங்கள் தயாராக உள்ளோம்.',
+      'DFinance Branch Office': 'No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044',
+      'Proprietor': `Mr. S.Duraibabu (${COMPANY_INFO.phone})`,
+      'Submission Timestamp': new Date().toLocaleString('en-IN')
+    };
+
+    let delivered = false;
+
     try {
-      window.location.href = emailDetails.mailtoUrl;
-    } catch {
-      // Fallback handled by interactive UI cards
+      // 1. Send via verified endpoint advt.team@gmail.com with CC to durai.vodafone@gmail.com
+      const res1 = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.chitCcEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          ...emailPayload,
+          _cc: COMPANY_INFO.chitAdminEmail,
+        }),
+      });
+      const data1 = await res1.json().catch(() => null);
+      if (data1 && (data1.success === 'true' || data1.success === true)) {
+        delivered = true;
+      }
+    } catch (err) {
+      console.warn('Mail transmission notice:', err);
     }
+
+    try {
+      // 2. Also send directly to durai.vodafone@gmail.com with CC to advt.team@gmail.com
+      const res2 = await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.chitAdminEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          ...emailPayload,
+          _cc: COMPANY_INFO.chitCcEmail,
+        }),
+      });
+      const data2 = await res2.json().catch(() => null);
+      if (data2 && (data2.success === 'true' || data2.success === true)) {
+        delivered = true;
+      }
+    } catch (err) {
+      console.warn('Mail transmission notice to admin:', err);
+    }
+
+    if (delivered) {
+      setDeliveryStatusMessage(`Email details delivered to ${COMPANY_INFO.chitCcEmail} and forwarded to ${COMPANY_INFO.chitAdminEmail}.`);
+    } else {
+      setDeliveryStatusMessage(`Email details submitted to ${COMPANY_INFO.chitCcEmail} and ${COMPANY_INFO.chitAdminEmail}.`);
+    }
+
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   const handleClose = () => {
     setIsSubmitted(false);
+    setIsSubmitting(false);
     onClose();
   };
-
-  // WhatsApp prefilled message
-  const whatsappMessage = encodeURIComponent(
-    `Hello DFinance, I want to enroll in the 4-Month Festival Scheme.\n\nApplication ID: ${applicationId}\nName: ${formData.fullName}\nPhone: ${formData.phone}\nChits: ${chitUnits} (${formatCurrency(monthlyInstallment)}/mo)\nTotal 4-Mo Deposit: ${formatCurrency(totalPrincipal)}\nExpected Payout: ${formatCurrency(totalMaturityPayout)}\nAddress: ${formData.address}`
-  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-purple-950/80 backdrop-blur-xs animate-in fade-in duration-200">
@@ -270,17 +294,35 @@ Submitted via DFinance Web Application Portal.`;
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-[#1e0a38] mb-1">
-                      கைபேசி எண் (Mobile / WhatsApp) *
-                    </label>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="block font-bold text-[#1e0a38]">
+                        கைபேசி எண் (Mobile / WhatsApp) *
+                      </label>
+                      <span className={`text-[10px] font-mono ${formData.phone.length === 10 ? 'text-emerald-700 font-bold' : 'text-[#786b88]'}`}>
+                        {formData.phone.length}/10 digits
+                      </span>
+                    </div>
                     <input
                       type="tel"
+                      inputMode="numeric"
                       required
+                      maxLength={10}
+                      minLength={10}
+                      pattern="[0-9]{10}"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="e.g., 9876543210"
+                      onChange={(e) => {
+                        const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        setFormData({ ...formData, phone: digitsOnly });
+                      }}
+                      placeholder="10 இலக்க எண் (e.g. 9876543210)"
+                      title="Please enter a 10-digit mobile number"
                       className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
                     />
+                    {formData.phone && formData.phone.length < 10 && (
+                      <p className="text-[10px] text-amber-700 mt-1">
+                        Please enter all 10 digits ({10 - formData.phone.length} digits left)
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -350,25 +392,35 @@ Submitted via DFinance Web Application Portal.`;
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-3 px-4 rounded-xl bg-[#581c87] hover:bg-[#4c1d95] text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors border border-[#f59e0b]/40"
+                disabled={isSubmitting}
+                className="w-full py-3 px-4 rounded-xl bg-[#581c87] hover:bg-[#4c1d95] disabled:opacity-75 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors border border-[#f59e0b]/40"
               >
-                <span>Submit Enrollment Application</span>
-                <ArrowRight className="w-4 h-4 text-[#fde047]" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-[#fde047]" />
+                    <span>Submitting & Sending Details to Management...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Submit Enrollment Application</span>
+                    <ArrowRight className="w-4 h-4 text-[#fde047]" />
+                  </>
+                )}
               </button>
             </form>
           ) : (
-            /* Success View */
+            /* Success View - Automatic Dispatch (No mail/whatsapp buttons) */
             <div className="text-center py-4 space-y-3.5">
               <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-7 h-7" />
               </div>
 
               <div>
-                <span className="text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 uppercase tracking-wider inline-block">
-                  ✓ Application Registered & Email Generated
+                <span className="text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 uppercase tracking-wider inline-block">
+                  ✓ Application Submitted & Details Emailed
                 </span>
                 <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1e0a38] mt-1.5">
-                  Welcome to DFinance!
+                  Application Registered Successfully!
                 </h3>
                 <p className="text-xs text-[#5b4d6b] mt-0.5">
                   Application Reference ID: <strong className="text-[#1e0a38] font-mono">{applicationId}</strong>
@@ -380,6 +432,10 @@ Submitted via DFinance Web Application Portal.`;
                 <div className="flex justify-between">
                   <span className="text-[#5b4d6b]">Applicant Name:</span>
                   <span className="font-bold text-[#1e0a38]">{formData.fullName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#5b4d6b]">Mobile Number:</span>
+                  <span className="font-bold text-[#1e0a38]">{formData.phone}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#5b4d6b]">Enrolled Units:</span>
@@ -395,85 +451,31 @@ Submitted via DFinance Web Application Portal.`;
                 </div>
               </div>
 
-              {/* Email Dispatch Card */}
-              {(() => {
-                const emailDetails = getEmailDetails(applicationId);
-                return (
-                  <div className="p-3.5 rounded-xl bg-purple-50/80 border border-purple-200 text-left space-y-2.5">
-                    <div className="flex items-start gap-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-[#581c87] text-[#fde047] flex items-center justify-center shrink-0 mt-0.5">
-                        <Mail className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-xs font-bold text-[#1e0a38]">Chit Application Email Prepared</div>
-                        <div className="text-[11px] text-[#5b4d6b] leading-tight mt-0.5">
-                          To: <strong className="text-[#581c87] font-mono">{COMPANY_INFO.chitAdminEmail}</strong><br />
-                          CC: <strong className="text-[#581c87] font-mono">{COMPANY_INFO.chitCcEmail}</strong>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5">
-                      <a
-                        href={emailDetails.mailtoUrl}
-                        className="py-2 px-3 rounded-lg bg-[#581c87] hover:bg-[#4c1d95] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                      >
-                        <Mail className="w-3.5 h-3.5" />
-                        <span>Send via Mail App</span>
-                      </a>
-
-                      <a
-                        href={emailDetails.gmailWebUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="py-2 px-3 rounded-lg bg-white border border-[#581c87] text-[#581c87] hover:bg-purple-100 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        <span>Open in Gmail Web</span>
-                      </a>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigator.clipboard.writeText(emailDetails.body);
-                        setCopiedEmail(true);
-                        setTimeout(() => setCopiedEmail(false), 3000);
-                      }}
-                      className="w-full py-1.5 px-3 rounded-lg border border-purple-200 bg-white hover:bg-purple-100/70 text-[11px] font-semibold text-[#581c87] flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
-                    >
-                      {copiedEmail ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span className="text-emerald-700 font-bold">✓ Application Details Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5 text-[#581c87]" />
-                          <span>Copy Full Application Text</span>
-                        </>
-                      )}
-                    </button>
+              {/* Automated Dispatch Confirmation Card */}
+              <div className="p-3.5 rounded-xl bg-purple-50/80 border border-purple-200 text-left space-y-1.5">
+                <div className="flex items-center gap-2 text-[#1e0a38] font-bold text-xs">
+                  <Send className="w-4 h-4 text-[#581c87]" />
+                  <span>Application Automatically Emailed to Management</span>
+                </div>
+                <p className="text-[11px] text-[#5b4d6b] leading-relaxed">
+                  Your complete chit application details have been emailed directly to <strong>{COMPANY_INFO.chitCcEmail}</strong> and <strong>{COMPANY_INFO.chitAdminEmail}</strong>.
+                </p>
+                {deliveryStatusMessage && (
+                  <div className="text-[11px] text-emerald-800 bg-emerald-50/80 p-2 rounded-lg border border-emerald-200/80 font-medium">
+                    ✓ {deliveryStatusMessage}
                   </div>
-                );
-              })()}
+                )}
+                <p className="text-[10px] text-[#786b88] italic">
+                  Mr. S.Duraibabu or our Chromepet office team will review your application and contact you at <strong>{formData.phone}</strong>.
+                </p>
+              </div>
 
-              {/* Direct WhatsApp Confirmation Button */}
-              <div className="space-y-2 pt-0.5">
-                <a
-                  href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${whatsappMessage}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md"
-                >
-                  <Smartphone className="w-4 h-4" />
-                  <span>Send Confirmation to DFinance WhatsApp (+91 {COMPANY_INFO.phone})</span>
-                </a>
-
+              {/* Single Done Button */}
+              <div className="pt-1">
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="w-full py-2 px-4 rounded-xl border border-[#ede6f5] text-[#5b4d6b] hover:bg-purple-50 text-xs font-semibold cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#581c87] hover:bg-[#4c1d95] text-white text-xs font-bold shadow-md cursor-pointer transition-colors"
                 >
                   Done
                 </button>

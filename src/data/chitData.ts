@@ -3,7 +3,7 @@ import { ChitScheme, VacantChit, AuctionEvent, Testimonial, FaqItem } from '../t
 export const COMPANY_INFO = {
   name: 'DFinance',
   legalName: 'D Finance Chit Company',
-  proprietor: 'திரு. துரைபாபு (Mr. Duraibabu)',
+  proprietor: 'திரு. S.துரைபாபு (Mr. S.Duraibabu)',
   tagline: 'தீபாவளி - பொங்கல் பண்டிகை கால சிறப்பு 4 மாத சேமிப்புத் திட்டம்',
   englishTagline: 'Deepavali & Pongal Festival Special 4-Month High-Yield Chit Scheme',
   registeredOffice: 'No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044',
@@ -257,7 +257,7 @@ export const TESTIMONIALS: Testimonial[] = [
     location: 'Chromepet, Chennai',
     rating: 5,
     review:
-      'D Finance is right in our neighbourhood in Lakshmi Puram, Chromepet. Mr. Duraibabu runs this 4-month festival scheme with utmost clarity. Depositing ₹4,000 monthly for 4 months gave our family an incredible return right before Deepavali.',
+      'D Finance is right in our neighbourhood in Lakshmi Puram, Chromepet. Mr. S.Duraibabu runs this 4-month festival scheme with utmost clarity. Depositing ₹4,000 monthly for 4 months gave our family an incredible return right before Deepavali.',
     schemeEnrolled: '1 Chit Plan (₹4,000/month)',
     yearsWithCompany: 'Member since 2022',
   },
@@ -268,7 +268,7 @@ export const TESTIMONIALS: Testimonial[] = [
     location: 'Hastinapuram, Chromepet',
     rating: 5,
     review:
-      'I took 10 chits bundle (₹40,000 per month). In just 4 months, my ₹1,60,000 capital turned into ₹2,76,000 with the 60% bonus and referral incentives. Duraibabu sir provides handwritten and official receipts promptly.',
+      'I took 10 chits bundle (₹40,000 per month). In just 4 months, my ₹1,60,000 capital turned into ₹2,76,000 with the 60% bonus and referral incentives. S.Duraibabu sir provides handwritten and official receipts promptly.',
     schemeEnrolled: '10 Chits Mega Plan',
     yearsWithCompany: 'Member since 2021',
   },
@@ -290,7 +290,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: 'general',
     question: 'What is the D Finance 4-Month Deepavali & Pongal Festival Chit Scheme?',
     answer:
-      'This is an exclusive high-yield 4-month short-term festival savings scheme operated by D Finance (Prop. Mr. Duraibabu), Chromepet, Chennai. Subscribers save ₹4,000 per month per chit for 4 months (total ₹16,000 principal). D Finance adds up to 60% interest (₹9,600). Plus, subscribers who introduce 10 members receive an additional ₹10,000 bonus, leading to a total payout of ₹35,600.',
+      'This is an exclusive high-yield 4-month short-term festival savings scheme operated by D Finance (Prop. Mr. S.Duraibabu), Chromepet, Chennai. Subscribers save ₹4,000 per month per chit for 4 months (total ₹16,000 principal). D Finance adds up to 60% interest (₹9,600). Plus, subscribers who introduce 10 members receive an additional ₹10,000 bonus, leading to a total payout of ₹35,600.',
   },
   {
     category: 'general',
@@ -308,7 +308,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: 'legal',
     question: 'Where is the D Finance office located and what are the registration credentials?',
     answer:
-      'The registered office is at: No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044 (எண் 12, முதல் புதுத் தெரு, லட்சுமிபுரம், குரோம்பேட்டை, சென்னை 600044). Managed by Mr. Duraibabu with Aadhaar No: 5527 5993 9866 and Govt. of India Udyam Registration Certificate No: UDYAM-TN-02-0501215. Phone: 9003241939 / 8668197626.',
+      'The registered office is at: No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044 (எண் 12, முதல் புதுத் தெரு, லட்சுமிபுரம், குரோம்பேட்டை, சென்னை 600044). Managed by Mr. S.Duraibabu with Aadhaar No: 5527 5993 9866 and Govt. of India Udyam Registration Certificate No: UDYAM-TN-02-0501215. Phone: 9003241939 / 8668197626.',
   },
   {
     category: 'payments',

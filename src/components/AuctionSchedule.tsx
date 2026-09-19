@@ -160,7 +160,7 @@ export const AuctionSchedule: React.FC<AuctionScheduleProps> = ({ onOpenAppShowc
               <div className="p-4 rounded-xl bg-white border border-[#ede6f5] space-y-2">
                 <h4 className="font-bold text-[#1e0a38] text-sm">4. Direct Proprietor Redressal</h4>
                 <p>
-                  All grievances, prize settlements, and account confirmations are directly managed by Mr. Duraibabu at our Chromepet registered office.
+                  All grievances, prize settlements, and account confirmations are directly managed by Mr. S.Duraibabu at our Chromepet registered office.
                 </p>
               </div>
             </div>

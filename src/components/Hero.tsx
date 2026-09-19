@@ -115,12 +115,12 @@ export const Hero: React.FC<HeroProps> = ({
               <p className="text-[#e9d5ff] text-base sm:text-lg leading-relaxed font-['Source_Sans_3'] max-w-2xl">
                 {language === 'ta' ? (
                   <>
-                    <strong className="text-white">DFinance (திரு. துரைபாபு)</strong>, லக்ஷ்மி புரம், குரோம்பேட்டை, சென்னை - 44. 
+                    <strong className="text-white">DFinance (திரு. S.துரைபாபு)</strong>, லக்ஷ்மி புரம், குரோம்பேட்டை, சென்னை - 44. 
                     மாதம் ₹1,000 மட்டுமே சேமித்து 4 மாத முடிவில் <strong>60% லாபத்துடன் ₹6,000 ரொக்கம்</strong> + ₹4,000 வரை பரிந்துரை சலுகைகள் பெறுங்கள்!
                   </>
                 ) : (
                   <>
-                    <strong className="text-white">DFinance (Prop. Mr. Duraibabu)</strong>, Lakshmi Puram, Chromepet, Chennai - 44. 
+                    <strong className="text-white">DFinance (Prop. Mr. S.Duraibabu)</strong>, Lakshmi Puram, Chromepet, Chennai - 44. 
                     Special 4-Month Deepavali & Pongal Festival Chit Scheme: Save ₹1,000/month for 4 months to receive a guaranteed <strong>₹6,000 cash payout (60% return)</strong> plus up to ₹4,000 referral benefits!
                   </>
                 )}

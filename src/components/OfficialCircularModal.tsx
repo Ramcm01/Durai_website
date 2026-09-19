@@ -114,7 +114,7 @@ export const OfficialCircularModal: React.FC<OfficialCircularModalProps> = ({
             {lang === 'tamil' ? (
               <div className="mt-6 space-y-4 text-xs sm:text-sm text-[#3b2d4a] leading-relaxed font-sans">
                 <p>
-                  <strong>திரு. துரைபாபு</strong> என்பவர் <strong>D பைனான்ஸ்</strong> சீட்டு நிறுவனம் நடத்திக்கொண்டு வருகிறார். இவரது அலுவலகம் சென்னை குரோம்பேட்டையில் உள்ளது.
+                  <strong>திரு. S.துரைபாபு</strong> என்பவர் <strong>D பைனான்ஸ்</strong> சீட்டு நிறுவனம் நடத்திக்கொண்டு வருகிறார். இவரது அலுவலகம் சென்னை குரோம்பேட்டையில் உள்ளது.
                 </p>
 
                 {/* Statutory Registration Table */}
@@ -219,7 +219,7 @@ export const OfficialCircularModal: React.FC<OfficialCircularModalProps> = ({
               /* English Translation of the Document */
               <div className="mt-6 space-y-4 text-xs sm:text-sm text-[#3b2d4a] leading-relaxed">
                 <p>
-                  <strong>Mr. Duraibabu</strong> is running the <strong>D Finance</strong> Chit Organization. The registered office is located in Chromepet, Chennai.
+                  <strong>Mr. S.Duraibabu</strong> is running the <strong>D Finance</strong> Chit Organization. The registered office is located in Chromepet, Chennai.
                 </p>
 
                 <div className="bg-[#faf7fd] p-3.5 rounded-lg border border-[#ede6f5] text-xs space-y-1">

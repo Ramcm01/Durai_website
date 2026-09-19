@@ -32,7 +32,7 @@ export const AanaPaisaApp: React.FC<AanaPaisaAppProps> = ({ onOpenQuickPay, onOp
     },
     {
       title: 'Direct Proprietor Contact',
-      desc: `Direct helpline to Mr. Duraibabu at our Chromepet registered office: ${COMPANY_INFO.shortAddress}.`,
+      desc: `Direct helpline to Mr. S.Duraibabu at our Chromepet registered office: ${COMPANY_INFO.shortAddress}.`,
       icon: Building2,
     },
   ];

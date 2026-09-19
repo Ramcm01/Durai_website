@@ -117,7 +117,7 @@ const translations: Record<Language, Translations> = {
     perMonth: 'மாதம்',
     
     topGovtReg: 'மத்திய அரசு உத்யம் பதிவு',
-    topBanner: '✨ தீபாவளி - பொங்கல் சிறப்பு 4 மாத சேமிப்புத் திட்டம் • 60% வட்டி வரை • Prop. திரு. துரைபாபு',
+    topBanner: '✨ தீபாவளி - பொங்கல் சிறப்பு 4 மாத சேமிப்புத் திட்டம் • 60% வட்டி வரை • Prop. திரு. S.துரைபாபு',
     helpline: 'உதவி எண்',
     chromepetOffice: 'குரோம்பேட்டை, சென்னை - 44',
     
@@ -136,7 +136,7 @@ const translations: Record<Language, Translations> = {
     heroFestivalPill: 'தீபாவளி & பொங்கல் பண்டிகை கால சிறப்புச் சேமிப்பு',
     heroTitleLine1: '4 மாத அதிவேக',
     heroTitleHighlight: 'தீபாவளி சீட்டு திட்டம்',
-    heroSubtitle: 'DFINANCE • உரிமையாளர் திரு. துரைபாபு',
+    heroSubtitle: 'DFINANCE • உரிமையாளர் திரு. S.துரைபாபு',
     heroOfferBadge: 'அதிகபட்ச லாபம் தரும் பண்டிகை கால சிறப்புத் திட்டம்',
     heroOfferText: 'மாதம் வெறும் ₹4,000 மட்டும் 4 மாதங்கள் செலுத்தி, நிறுவனம் வழங்கும் 60% வரை வட்டி (₹9,600) மற்றும் 10 நபர்களை சேர்த்தால் ₹10,000 போனஸ் பெற்று மொத்தம் ₹35,600 வரை பெற்றிடுங்கள்!',
     heroPillar1Title: '1 முதல் 10 சீட்டு',
@@ -201,9 +201,9 @@ const translations: Record<Language, Translations> = {
 
     whyPill: 'குரோம்பேட்டை கிளை சிறப்பு & நம்பகத்தன்மை',
     whyTitle: 'Why Savers Choose DFinance',
-    whySubtitle: 'குரோம்பேட்டையில் திரு. துரைபாபு அவர்களின் நேரடி நிர்வாகத்தில் இயங்கும் DFinance சீட்டு நிறுவனம் தரும் நம்பகத்தன்மை மற்றும் சிறப்பு பலன்கள்.',
+    whySubtitle: 'குரோம்பேட்டையில் திரு. S.துரைபாபு அவர்களின் நேரடி நிர்வாகத்தில் இயங்கும் DFinance சீட்டு நிறுவனம் தரும் நம்பகத்தன்மை மற்றும் சிறப்பு பலன்கள்.',
     whyTrustTitle: 'நேரடி அலுவலகம் • வெளிப்படையான கணக்கு விவரங்கள்',
-    whyTrustDesc: 'எங்கள் பதிவு அலுவலகத்திற்கு (எண் 12, முதல் புதுத் தெரு, லட்சுமிபுரம், குரோம்பேட்டை) நேரில் வந்து ரசீதுகளைப் பெறலாம். திரு. துரைபாபு அவர்களின் நேரடிப் பொறுப்பில் உங்கள் பணம் முழுப் பாதுகாப்போடு சேமிக்கப்படுகிறது.',
+    whyTrustDesc: 'எங்கள் பதிவு அலுவலகத்திற்கு (எண் 12, முதல் புதுத் தெரு, லட்சுமிபுரம், குரோம்பேட்டை) நேரில் வந்து ரசீதுகளைப் பெறலாம். திரு. S.துரைபாபு அவர்களின் நேரடிப் பொறுப்பில் உங்கள் பணம் முழுப் பாதுகாப்போடு சேமிக்கப்படுகிறது.',
 
     viewCircular: 'அதிகாரப்பூர்வ சுற்றறிக்கை பார்க்க',
     downloadCircular: 'சுற்றறிக்கையை பதிவிறக்க',
@@ -215,7 +215,7 @@ const translations: Record<Language, Translations> = {
     perMonth: 'month',
     
     topGovtReg: 'Govt. Udyam Registered',
-    topBanner: '✨ Deepavali & Pongal Festival 4-Month Special Chit • Up to 60% Yield • Prop. Mr. Duraibabu',
+    topBanner: '✨ Deepavali & Pongal Festival 4-Month Special Chit • Up to 60% Yield • Prop. Mr. S.Duraibabu',
     helpline: 'Helpline',
     chromepetOffice: 'Chromepet, Chennai - 44',
     
@@ -234,7 +234,7 @@ const translations: Record<Language, Translations> = {
     heroFestivalPill: 'Deepavali & Pongal Festival Special Savings Scheme',
     heroTitleLine1: 'Rapid 4-Month',
     heroTitleHighlight: 'Diwali Festival Chit Scheme',
-    heroSubtitle: 'DFINANCE • Proprietor: Mr. Duraibabu',
+    heroSubtitle: 'DFINANCE • Proprietor: Mr. S.Duraibabu',
     heroOfferBadge: 'Maximum Profit Festive Savings Plan',
     heroOfferText: 'Pay only ₹4,000 per month for just 4 months. Earn up to 60% company interest (₹9,600) and an extra ₹10,000 bonus on referring 10 members to receive up to ₹35,600 total payout!',
     heroPillar1Title: '1 to 10 Chit Units',
@@ -299,7 +299,7 @@ const translations: Record<Language, Translations> = {
 
     whyPill: 'Chromepet Branch Trust & Credibility',
     whyTitle: 'Why Savers Choose DFinance',
-    whySubtitle: 'Operating under the direct supervision of proprietor Mr. Duraibabu in Chromepet, Chennai with full transparency and verified receipts.',
+    whySubtitle: 'Operating under the direct supervision of proprietor Mr. S.Duraibabu in Chromepet, Chennai with full transparency and verified receipts.',
     whyTrustTitle: 'Direct Walk-in Branch • Transparent Records',
     whyTrustDesc: 'Visit our registered office at No.12, First New Street, Lakshmi Puram, Chromepet, Chennai - 44 for instant computerized and printed receipts. Managed with utmost security.',
 

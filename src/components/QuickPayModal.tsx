@@ -134,17 +134,32 @@ export const QuickPayModal: React.FC<QuickPayModalProps> = ({ isOpen, onClose })
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#1e0a38] mb-1">
-                    Registered Mobile Number *
-                  </label>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block font-bold text-[#1e0a38]">
+                      Registered Mobile Number *
+                    </label>
+                    <span className={`text-[10px] font-mono ${phone.length === 10 ? 'text-emerald-700 font-bold' : 'text-[#786b88]'}`}>
+                      {phone.length}/10 digits
+                    </span>
+                  </div>
                   <input
                     type="tel"
+                    inputMode="numeric"
                     required
+                    maxLength={10}
+                    minLength={10}
+                    pattern="[0-9]{10}"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
                     placeholder="10-digit mobile number"
+                    title="Please enter a 10-digit mobile number"
                     className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
                   />
+                  {phone && phone.length < 10 && (
+                    <p className="text-[10px] text-amber-700 mt-1">
+                      Please enter all 10 digits ({10 - phone.length} digits left)
+                    </p>
+                  )}
                 </div>
               </div>
 

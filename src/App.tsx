@@ -161,7 +161,7 @@ function AppContent() {
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-full shadow-lg hover:shadow-emerald-600/30 transition-all cursor-pointer font-bold text-xs group"
-          title="Chat with Mr. Duraibabu on WhatsApp"
+          title="Chat with Mr. S.Duraibabu on WhatsApp"
         >
           <MessageCircle className="w-5 h-5 fill-current" />
           <span className="hidden sm:inline">WhatsApp Help ({COMPANY_INFO.phone})</span>

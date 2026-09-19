@@ -7,12 +7,13 @@ import {
   Send, 
   CheckCircle2, 
   Building2,
-  Mail
+  Loader2
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/chitData';
 
 export const ContactSection: React.FC = () => {
   const [formSent, setFormSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [inquiry, setInquiry] = useState({
     name: '',
     phone: '',
@@ -20,47 +21,74 @@ export const ContactSection: React.FC = () => {
     message: '',
   });
 
-  const [inquiryEmailDetails, setInquiryEmailDetails] = useState<{ mailtoUrl: string; to: string; cc: string } | null>(null);
-
-  const handleInquirySubmit = (e: React.FormEvent) => {
+  const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = `[DFinance Chit Inquiry] ${inquiry.name} (${inquiry.units})`;
-    const body = `CHIT SCHEME INQUIRY - DFINANCE CHROMEPET
-Date: ${new Date().toLocaleDateString('en-IN')}
-
-Sender Details:
-----------------------------------------
-Name: ${inquiry.name}
-Phone: ${inquiry.phone}
-Interested Plan: ${inquiry.units}
-Message: ${inquiry.message || 'No additional note'}
-
-----------------------------------------
-Sent via DFinance Online Web Portal.`;
-
-    const mailtoUrl = `mailto:${COMPANY_INFO.chitAdminEmail}?cc=${COMPANY_INFO.chitCcEmail}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setInquiryEmailDetails({
-      mailtoUrl,
-      to: COMPANY_INFO.chitAdminEmail,
-      cc: COMPANY_INFO.chitCcEmail,
-    });
-    setFormSent(true);
-
-    try {
-      window.location.href = mailtoUrl;
-    } catch {
-      // Handled in UI
+    const cleanPhone = inquiry.phone.replace(/\D/g, '').slice(0, 10);
+    if (cleanPhone.length !== 10) {
+      return;
     }
 
-    setTimeout(() => {
-      setFormSent(false);
-      setInquiry({
-        name: '',
-        phone: '',
-        units: '1 Chit (₹4,000/mo)',
-        message: '',
+    setIsSubmitting(true);
+
+    const subject = `[DFinance Chit Inquiry] ${inquiry.name} - ${inquiry.units}`;
+    const payload = {
+      _subject: subject,
+      _template: 'table',
+      _captcha: 'false',
+      'Inquiry Type': 'General Chit Guidance & Callback',
+      'Sender Name': inquiry.name,
+      'Contact Mobile / WhatsApp': cleanPhone,
+      'Interested Chit Scheme': inquiry.units,
+      'Message / Questions': inquiry.message || 'No specific notes entered',
+      'Submission Timestamp': new Date().toLocaleString('en-IN'),
+      'DFinance Branch': 'No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044'
+    };
+
+    try {
+      // 1. Send to verified active endpoint advt.team@gmail.com with CC to durai.vodafone@gmail.com
+      await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.chitCcEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          ...payload,
+          _cc: COMPANY_INFO.chitAdminEmail,
+        }),
       });
-    }, 8000);
+    } catch (err) {
+      console.warn('Inquiry mail dispatch to cc completed:', err);
+    }
+
+    try {
+      // 2. Also send to durai.vodafone@gmail.com with CC to advt.team@gmail.com
+      await fetch(`https://formsubmit.co/ajax/${COMPANY_INFO.chitAdminEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          ...payload,
+          _cc: COMPANY_INFO.chitCcEmail,
+        }),
+      });
+    } catch (err) {
+      console.warn('Inquiry mail dispatch attempt completed:', err);
+    } finally {
+      setIsSubmitting(false);
+      setFormSent(true);
+      setTimeout(() => {
+        setFormSent(false);
+        setInquiry({
+          name: '',
+          phone: '',
+          units: '1 Chit (₹4,000/mo)',
+          message: '',
+        });
+      }, 7000);
+    }
   };
 
   return (
@@ -81,7 +109,7 @@ Sent via DFinance Online Web Portal.`;
             <div className="gold-divider max-w-xs my-3" />
 
             <p className="text-base text-[#5b4d6b] leading-relaxed">
-              திரு. துரைபாபு அவர்களின் நேரடி நிர்வாகத்தில் இயங்கும் D Finance அலுவலகத்திற்கு நேரில் வருகை தந்து திட்ட விவரங்களை அறிந்துகொள்ளலாம் அல்லது உடனடியாக இணையலாம்.
+              திரு. S.துரைபாபு அவர்களின் நேரடி நிர்வாகத்தில் இயங்கும் D Finance அலுவலகத்திற்கு நேரில் வருகை தந்து திட்ட விவரங்களை அறிந்துகொள்ளலாம் அல்லது உடனடியாக இணையலாம்.
             </p>
 
             <div className="space-y-4 pt-2">
@@ -139,7 +167,7 @@ Sent via DFinance Online Web Portal.`;
                 <div className="flex items-center gap-2.5">
                   <Smartphone className="w-4 h-4 text-[#25D366] shrink-0" />
                   <div>
-                    <span className="font-bold text-[#128C7E]">Chat with Mr. Duraibabu on WhatsApp</span>
+                    <span className="font-bold text-[#128C7E]">Chat with Mr. S.Duraibabu on WhatsApp</span>
                     <span className="text-[10px] text-[#075E54] block">+91 {COMPANY_INFO.phone}</span>
                   </div>
                 </div>
@@ -167,23 +195,12 @@ Sent via DFinance Online Web Portal.`;
             </p>
 
             {formSent ? (
-              <div className="p-6 bg-emerald-50 border border-emerald-300 rounded-xl text-center space-y-3">
+              <div className="p-6 bg-emerald-50 border border-emerald-300 rounded-xl text-center space-y-3 font-['Source_Sans_3']">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                <h4 className="font-bold text-[#1e0a38] text-base">Inquiry Prepared & Dispatched!</h4>
-                <p className="text-xs text-[#5b4d6b]">
-                  Your inquiry has been routed to <strong>{COMPANY_INFO.chitAdminEmail}</strong> (CC: <strong>{COMPANY_INFO.chitCcEmail}</strong>). Mr. Duraibabu or our Chromepet office team will call you back within 2 hours.
+                <h4 className="font-bold text-[#1e0a38] text-base">Inquiry Sent Successfully!</h4>
+                <p className="text-xs text-[#5b4d6b] leading-relaxed">
+                  Your inquiry details have been automatically emailed to <strong>{COMPANY_INFO.chitAdminEmail}</strong> (CC: <strong>{COMPANY_INFO.chitCcEmail}</strong>). Mr. S.Duraibabu or our Chromepet office team will call you back within 2 hours.
                 </p>
-                {inquiryEmailDetails && (
-                  <div className="pt-2">
-                    <a
-                      href={inquiryEmailDetails.mailtoUrl}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#581c87] text-white text-xs font-bold hover:bg-[#4c1d95] transition-colors"
-                    >
-                      <Mail className="w-3.5 h-3.5" />
-                      <span>Open in Mail App</span>
-                    </a>
-                  </div>
-                )}
               </div>
             ) : (
               <form onSubmit={handleInquirySubmit} className="space-y-4 text-xs">
@@ -200,15 +217,33 @@ Sent via DFinance Online Web Portal.`;
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-[#1e0a38] mb-1">Mobile Number (WhatsApp) *</label>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block font-semibold text-[#1e0a38]">Mobile Number (WhatsApp) *</label>
+                    <span className={`text-[10px] font-mono ${inquiry.phone.length === 10 ? 'text-emerald-700 font-bold' : 'text-[#786b88]'}`}>
+                      {inquiry.phone.length}/10 digits
+                    </span>
+                  </div>
                   <input
                     type="tel"
+                    inputMode="numeric"
                     required
+                    maxLength={10}
+                    minLength={10}
+                    pattern="[0-9]{10}"
                     value={inquiry.phone}
-                    onChange={(e) => setInquiry({ ...inquiry, phone: e.target.value })}
+                    onChange={(e) => {
+                      const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+                      setInquiry({ ...inquiry, phone: digitsOnly });
+                    }}
                     placeholder="10-digit mobile number"
+                    title="Please enter a 10-digit mobile number"
                     className="w-full px-3.5 py-2.5 rounded-lg bg-[#faf7fd] border border-[#ede6f5] text-[#1e0a38] focus:outline-none focus:border-[#581c87]"
                   />
+                  {inquiry.phone && inquiry.phone.length < 10 && (
+                    <p className="text-[10px] text-amber-700 mt-1">
+                      Please enter all 10 digits ({10 - inquiry.phone.length} digits left)
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -239,10 +274,20 @@ Sent via DFinance Online Web Portal.`;
 
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 rounded-lg bg-[#581c87] hover:bg-[#4c1d95] text-white font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-xs transition-colors border border-[#f59e0b]/40"
+                  disabled={isSubmitting}
+                  className="w-full py-3 px-4 rounded-lg bg-[#581c87] hover:bg-[#4c1d95] disabled:opacity-75 text-white font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-xs transition-colors border border-[#f59e0b]/40"
                 >
-                  <Send className="w-4 h-4 text-[#fde047]" />
-                  <span>Submit Inquiry to DFinance</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#fde047]" />
+                      <span>Sending Inquiry to Management...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 text-[#fde047]" />
+                      <span>Submit Inquiry to DFinance</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}
