@@ -104,24 +104,24 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl border border-slate-200 max-h-[92vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-purple-950/80 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl border border-[#ede6f5] max-h-[92vh] flex flex-col font-['Source_Sans_3']">
         {/* Header */}
-        <div className="bg-slate-900 text-white p-5 flex justify-between items-center border-b border-slate-800 shrink-0">
+        <div className="bg-[#1e0a38] text-white p-5 flex justify-between items-center border-b border-purple-900 shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-red-600/30 border border-red-500/40 text-amber-400 flex items-center justify-center font-black text-base">
+            <div className="w-9 h-9 rounded-lg bg-purple-700/50 border border-[#f59e0b]/50 text-[#fde047] flex items-center justify-center font-black text-base">
               D
             </div>
             <div>
-              <h3 className="font-bold text-base text-white">Enroll in DFinance Scheme</h3>
-              <p className="text-[11px] text-slate-300">
+              <h3 className="font-['Playfair_Display'] font-bold text-base text-white">Enroll in DFinance Scheme</h3>
+              <p className="text-[11px] text-purple-200">
                 தீபாவளி - பொங்கல் பண்டிகை கால சிறப்பு 4 மாத திட்டம்
               </p>
             </div>
           </div>
           <button
             onClick={handleClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg transition-colors cursor-pointer"
+            className="text-purple-300 hover:text-white p-1 rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -132,13 +132,13 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Units Selection Box */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+              <div className="p-4 rounded-xl bg-[#faf7fd] border border-[#ede6f5] space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                    <Coins className="w-4 h-4 text-amber-600" />
+                  <label className="text-xs font-bold text-[#1e0a38] flex items-center gap-1.5">
+                    <Coins className="w-4 h-4 text-[#f59e0b]" />
                     Number of Chits (1 முதல் 10 சீட்டு வரை):
                   </label>
-                  <span className="text-xs font-black px-2.5 py-1 bg-amber-500 text-slate-950 rounded-md">
+                  <span className="text-xs font-black px-2.5 py-1 bg-[#f59e0b] text-[#1e0a38] rounded-md">
                     {chitUnits} {chitUnits === 1 ? 'Chit' : 'Chits'}
                   </span>
                 </div>
@@ -149,10 +149,10 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                       key={num}
                       type="button"
                       onClick={() => setChitUnits(num)}
-                      className={`py-1 text-xs font-bold rounded border cursor-pointer ${
+                      className={`py-1 text-xs font-bold rounded-md border cursor-pointer transition-colors ${
                         chitUnits === num
-                          ? 'bg-slate-900 border-slate-900 text-white'
-                          : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+                          ? 'bg-[#581c87] border-[#581c87] text-white shadow-xs'
+                          : 'bg-white border-[#ede6f5] text-[#5b4d6b] hover:bg-purple-50'
                       }`}
                     >
                       {num}
@@ -161,27 +161,27 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                 </div>
 
                 {/* Financial Summary */}
-                <div className="pt-2 border-t border-slate-200 grid grid-cols-2 gap-2 text-[11px]">
+                <div className="pt-2 border-t border-[#ede6f5] grid grid-cols-2 gap-2 text-[11px]">
                   <div>
-                    <span className="text-slate-500 block">Monthly Installment:</span>
-                    <span className="font-bold text-slate-900">{formatCurrency(monthlyInstallment)}</span>
+                    <span className="text-[#5b4d6b] block">Monthly Installment:</span>
+                    <span className="font-bold text-[#1e0a38]">{formatCurrency(monthlyInstallment)}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">4-Mo Total Deposit:</span>
-                    <span className="font-bold text-slate-900">{formatCurrency(totalPrincipal)}</span>
+                    <span className="text-[#5b4d6b] block">4-Mo Total Deposit:</span>
+                    <span className="font-bold text-[#1e0a38]">{formatCurrency(totalPrincipal)}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">60% Company Interest:</span>
-                    <span className="font-bold text-amber-600">+{formatCurrency(interestAmount)}</span>
+                    <span className="text-[#5b4d6b] block">60% Company Interest:</span>
+                    <span className="font-bold text-[#f59e0b]">+{formatCurrency(interestAmount)}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">Total Guaranteed Payout:</span>
-                    <span className="font-black text-red-600 text-sm">{formatCurrency(totalMaturityPayout)}</span>
+                    <span className="text-[#5b4d6b] block">Total Guaranteed Payout:</span>
+                    <span className="font-black text-[#581c87] text-sm">{formatCurrency(totalMaturityPayout)}</span>
                   </div>
                 </div>
 
                 {/* Referral checkbox */}
-                <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs text-amber-950">
+                <div className="pt-2 border-t border-[#ede6f5] flex items-center justify-between text-xs text-[#1e0a38]">
                   <span className="font-semibold">
                     10-Member Referral ({chitUnits === 10 ? '₹20,000' : '₹10,000'} Bonus)
                   </span>
@@ -189,7 +189,7 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                     type="checkbox"
                     checked={includeReferral}
                     onChange={(e) => setIncludeReferral(e.target.checked)}
-                    className="w-4 h-4 text-amber-600 rounded border-slate-300 cursor-pointer"
+                    className="w-4 h-4 text-[#581c87] rounded border-purple-300 cursor-pointer accent-[#581c87]"
                   />
                 </div>
               </div>
@@ -197,7 +197,7 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
               {/* Applicant Information Fields */}
               <div className="space-y-3 text-xs">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">
+                  <label className="block font-bold text-[#1e0a38] mb-1">
                     வாடிக்கையாளர் பெயர் (Subscriber Full Name) *
                   </label>
                   <input
@@ -206,13 +206,13 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g., K. Sundaram"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-900"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">
+                    <label className="block font-bold text-[#1e0a38] mb-1">
                       கைபேசி எண் (Mobile / WhatsApp) *
                     </label>
                     <input
@@ -221,12 +221,12 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="e.g., 9876543210"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-900"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">
+                    <label className="block font-bold text-[#1e0a38] mb-1">
                       சேரும் நாள் (Joining Date) *
                     </label>
                     <input
@@ -234,13 +234,13 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                       required
                       value={formData.joiningDate}
                       onChange={(e) => setFormData({ ...formData, joiningDate: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-900"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">
+                  <label className="block font-bold text-[#1e0a38] mb-1">
                     முகவரி (Address / Area in Chennai)
                   </label>
                   <input
@@ -248,12 +248,12 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     placeholder="e.g., Lakshmi Puram, Chromepet, Chennai - 44"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-900"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
                   />
                 </div>
 
                 {/* Statutory Pledge From Document */}
-                <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-300 space-y-2">
+                <div className="p-3.5 rounded-xl bg-purple-50 border border-purple-200 space-y-2">
                   <div className="flex items-start gap-2">
                     <input
                       type="checkbox"
@@ -261,13 +261,13 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                       required
                       checked={formData.agreedToPledge}
                       onChange={(e) => setFormData({ ...formData, agreedToPledge: e.target.checked })}
-                      className="w-4 h-4 text-amber-600 rounded border-amber-400 mt-0.5 cursor-pointer"
+                      className="w-4 h-4 text-[#581c87] rounded border-purple-300 mt-0.5 cursor-pointer accent-[#581c87]"
                     />
-                    <label htmlFor="pledge-check" className="text-[11px] text-amber-950 font-semibold cursor-pointer">
+                    <label htmlFor="pledge-check" className="text-[11px] text-[#1e0a38] font-semibold cursor-pointer">
                       "இத்திட்டத்தில் முழுமனதுடன் இணைய நாங்கள் தயாராக உள்ளோம்." (We are willing to enroll with our full consent in DFinance 4-Month Festival Scheme).
                     </label>
                   </div>
-                  <div className="text-[10px] text-slate-600 pl-6 flex justify-between">
+                  <div className="text-[10px] text-[#5b4d6b] pl-6 flex justify-between">
                     <span>சேரும் நாள்: <strong>{formData.joiningDate}</strong></span>
                     <span>முடியும் நாள்: <strong>{calculateMaturityDate(formData.joiningDate)}</strong></span>
                   </div>
@@ -277,10 +277,10 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-3 px-4 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors"
+                className="w-full py-3 px-4 rounded-xl bg-[#581c87] hover:bg-[#4c1d95] text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors border border-[#f59e0b]/40"
               >
                 <span>Submit Enrollment Application</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#fde047]" />
               </button>
             </form>
           ) : (
@@ -291,35 +291,35 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
               </div>
 
               <div>
-                <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider block">
+                <span className="text-xs font-mono font-bold text-[#5b4d6b] uppercase tracking-wider block">
                   Application Registered Successfully
                 </span>
-                <h3 className="text-xl font-black text-slate-900 mt-1">
+                <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1e0a38] mt-1">
                   Welcome to DFinance!
                 </h3>
-                <p className="text-xs text-slate-600 mt-1">
-                  Your application reference ID: <strong className="text-slate-900 font-mono">{applicationId}</strong>
+                <p className="text-xs text-[#5b4d6b] mt-1">
+                  Your application reference ID: <strong className="text-[#1e0a38] font-mono">{applicationId}</strong>
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-left space-y-2">
+              <div className="p-4 rounded-xl bg-[#faf7fd] border border-[#ede6f5] text-xs text-left space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Applicant Name:</span>
-                  <span className="font-bold text-slate-900">{formData.fullName}</span>
+                  <span className="text-[#5b4d6b]">Applicant Name:</span>
+                  <span className="font-bold text-[#1e0a38]">{formData.fullName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Enrolled Units:</span>
-                  <span className="font-bold text-slate-900">{chitUnits} Chit(s) (4 Months)</span>
+                  <span className="text-[#5b4d6b]">Enrolled Units:</span>
+                  <span className="font-bold text-[#1e0a38]">{chitUnits} Chit(s) (4 Months)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Monthly Deposit:</span>
-                  <span className="font-bold text-slate-900">{formatCurrency(monthlyInstallment)}</span>
+                  <span className="text-[#5b4d6b]">Monthly Deposit:</span>
+                  <span className="font-bold text-[#1e0a38]">{formatCurrency(monthlyInstallment)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Total Expected Payout:</span>
-                  <span className="font-black text-red-600 text-sm">{formatCurrency(totalMaturityPayout)}</span>
+                  <span className="text-[#5b4d6b]">Total Expected Payout:</span>
+                  <span className="font-black text-[#581c87] text-sm">{formatCurrency(totalMaturityPayout)}</span>
                 </div>
-                <div className="pt-2 border-t border-slate-200 text-[11px] text-slate-600">
+                <div className="pt-2 border-t border-[#ede6f5] text-[11px] text-[#5b4d6b]">
                   DFinance Office: <strong>{COMPANY_INFO.shortAddress}</strong>. Call: <strong>{COMPANY_INFO.phone}</strong>.
                 </div>
               </div>
@@ -327,19 +327,19 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
               {/* Direct WhatsApp Confirmation Button */}
               <div className="space-y-2">
                 <a
-                  href={`https://wa.me/918668197626?text=${whatsappMessage}`}
+                  href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md"
                 >
                   <Smartphone className="w-4 h-4" />
-                  <span>Send Confirmation to DFinance WhatsApp (+91 8668197626)</span>
+                  <span>Send Confirmation to DFinance WhatsApp (+91 {COMPANY_INFO.phone})</span>
                 </a>
 
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-xs font-semibold cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-xl border border-[#ede6f5] text-[#5b4d6b] hover:bg-purple-50 text-xs font-semibold cursor-pointer"
                 >
                   Done
                 </button>

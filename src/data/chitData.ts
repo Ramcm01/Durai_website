@@ -11,9 +11,9 @@ export const COMPANY_INFO = {
   tamilAddress: 'எண் 12, முதல் புதுத் தெரு, லட்சுமிபுரம், குரோம்பேட்டை, சென்னை 600044.',
   shortAddress: 'No.12, First New Street, Lakshmi Puram, Chromepet, Chennai - 44',
   landmark: 'Near Chromepet Railway Station & GST Road, Lakshmi Puram',
-  phone: '8668197626',
-  secondaryPhone: '9003241939',
-  whatsappNumber: '918668197626',
+  phone: '9003241939',
+  secondaryPhone: '8668197626',
+  whatsappNumber: '919003241939',
   email: 'contact@dfinance.in',
   aadhaarNo: '5527 5993 9866',
   udyamRegNo: 'UDYAM-TN-02-0501215',
@@ -306,13 +306,13 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: 'legal',
     question: 'Where is the D Finance office located and what are the registration credentials?',
     answer:
-      'The registered office is at: No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044 (எண் 12, முதல் புதுத் தெரு, லட்சுமிபுரம், குரோம்பேட்டை, சென்னை 600044). Managed by Mr. Duraibabu with Aadhaar No: 5527 5993 9866 and Govt. of India Udyam Registration Certificate No: UDYAM-TN-02-0501215. Phone: 8668197626 / 9003241939.',
+      'The registered office is at: No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044 (எண் 12, முதல் புதுத் தெரு, லட்சுமிபுரம், குரோம்பேட்டை, சென்னை 600044). Managed by Mr. Duraibabu with Aadhaar No: 5527 5993 9866 and Govt. of India Udyam Registration Certificate No: UDYAM-TN-02-0501215. Phone: 9003241939 / 8668197626.',
   },
   {
     category: 'payments',
     question: 'How can I pay my monthly ₹4,000 installment?',
     answer:
-      'You can pay in cash directly at our Chromepet office, or digitally via UPI (Google Pay, PhonePe, Paytm, BHIM) to 8668197626 or 9003241939. Immediate printed or digital receipts with official D Finance seal are issued.',
+      'You can pay in cash directly at our Chromepet office, or digitally via UPI (Google Pay, PhonePe, Paytm, BHIM) to 9003241939 or 8668197626. Immediate printed or digital receipts with official D Finance seal are issued.',
   },
   {
     category: 'bidding',

@@ -70,33 +70,33 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
   };
 
   return (
-    <section id="calculator" className="py-20 bg-white border-b border-[#e5e0d3]">
+    <section id="calculator" className="py-20 bg-white border-b border-[#ede6f5]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#8e1426] bg-[#8e1426]/10 px-3.5 py-1.5 rounded font-['Source_Sans_3'] mb-3">
-            <Calculator className="w-4 h-4 text-[#8e1426]" />
+          <div className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#581c87] bg-purple-100 px-3.5 py-1.5 rounded-full font-['Source_Sans_3'] mb-3 border border-purple-200">
+            <Calculator className="w-4 h-4 text-[#581c87]" />
             <span>{t.calcPill}</span>
           </div>
-          <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2c1b1b] tracking-tight">
+          <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1e0a38] tracking-tight">
             {t.calcTitle}
           </h2>
           <div className="gold-divider max-w-xs mx-auto my-4" />
-          <p className="text-base text-[#57534e] font-medium font-['Source_Sans_3'] leading-relaxed">
+          <p className="text-base text-[#5b4d6b] font-medium font-['Source_Sans_3'] leading-relaxed">
             {t.calcSubtitle}
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Interactive Controls */}
-          <div className="lg:col-span-6 bg-[#faf8f4] rounded-lg p-6 sm:p-8 border border-[#e5e0d3] shadow-xs space-y-6 font-['Source_Sans_3']">
+          <div className="lg:col-span-6 bg-[#faf7fd] rounded-xl p-6 sm:p-8 border border-[#ede6f5] shadow-xs space-y-6 font-['Source_Sans_3']">
             <div>
               <div className="flex justify-between items-center mb-3">
-                <label className="text-sm font-bold text-[#2c1b1b] flex items-center gap-2">
-                  <Coins className="w-5 h-5 text-[#8e1426]" />
+                <label className="text-sm font-bold text-[#1e0a38] flex items-center gap-2">
+                  <Coins className="w-5 h-5 text-[#581c87]" />
                   <span>{t.calcSliderLabel}</span>
                 </label>
-                <span className="text-sm font-bold px-3.5 py-1 bg-[#8e1426] text-white rounded shadow-xs font-['Source_Sans_3']">
+                <span className="text-sm font-bold px-3.5 py-1 bg-[#581c87] text-white rounded-md shadow-xs font-['Source_Sans_3']">
                   {chitUnits} {chitUnits === 1 ? (language === 'ta' ? 'சீட்டு' : 'Unit') : (language === 'ta' ? 'சீட்டுகள்' : 'Units')}
                 </span>
               </div>
@@ -109,7 +109,7 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
                 step={1}
                 value={chitUnits}
                 onChange={(e) => setChitUnits(Number(e.target.value))}
-                className="w-full h-2.5 bg-[#e5e0d3] rounded-lg appearance-none cursor-pointer accent-[#8e1426]"
+                className="w-full h-2.5 bg-[#ede6f5] rounded-lg appearance-none cursor-pointer accent-[#581c87]"
               />
 
               {/* Quick Select Buttons */}
@@ -119,10 +119,10 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
                     key={num}
                     type="button"
                     onClick={() => setChitUnits(num)}
-                    className={`py-2 text-xs font-bold rounded border transition-all cursor-pointer ${
+                    className={`py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
                       chitUnits === num
-                        ? 'bg-[#8e1426] border-[#8e1426] text-white shadow-xs'
-                        : 'bg-white border-[#e5e0d3] text-[#34322d] hover:border-[#8e1426]'
+                        ? 'bg-[#581c87] border-[#581c87] text-white shadow-xs'
+                        : 'bg-white border-[#ede6f5] text-[#4a3e56] hover:border-[#581c87]'
                     }`}
                   >
                     {num}
@@ -133,9 +133,9 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
 
             {/* Scheme Parameter Cards */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="p-4 rounded-lg bg-white border border-[#e5e0d3]">
-                <div className="text-xs text-[#57534e] font-semibold">{t.colMonthly}</div>
-                <div className="text-xl font-bold text-[#8e1426] font-['Playfair_Display'] mt-1">
+              <div className="p-4 rounded-lg bg-white border border-[#ede6f5]">
+                <div className="text-xs text-[#5b4d6b] font-semibold">{t.colMonthly}</div>
+                <div className="text-xl font-bold text-[#581c87] font-['Playfair_Display'] mt-1">
                   {formatCurrency(calculations.monthlyInstallment)}
                 </div>
                 <div className="text-[11px] text-[#78716c] mt-0.5">
@@ -143,54 +143,54 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg bg-white border border-[#e5e0d3]">
-                <div className="text-xs text-[#57534e] font-semibold">{t.calcTenureLabel}</div>
-                <div className="text-xl font-bold text-[#2c1b1b] font-['Playfair_Display'] mt-1">
+              <div className="p-4 rounded-lg bg-white border border-[#ede6f5]">
+                <div className="text-xs text-[#5b4d6b] font-semibold">{t.calcTenureLabel}</div>
+                <div className="text-xl font-bold text-[#1e0a38] font-['Playfair_Display'] mt-1">
                   {calculations.durationMonths} {t.monthsSuffix}
                 </div>
-                <div className="text-[11px] text-[#8e1426] font-semibold mt-0.5">
+                <div className="text-[11px] text-[#6b21a8] font-semibold mt-0.5">
                   {t.calcTenureValue}
                 </div>
               </div>
             </div>
 
             {/* Referral Option Toggle */}
-            <div className="p-4 rounded-lg bg-white border border-[#d79628]/50 space-y-2">
+            <div className="p-4 rounded-lg bg-white border border-[#f59e0b]/50 space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-[#2c1b1b] flex items-center gap-1.5 cursor-pointer">
-                  <Gift className="w-4 h-4 text-[#d79628]" />
+                <label className="text-xs font-bold text-[#1e0a38] flex items-center gap-1.5 cursor-pointer">
+                  <Gift className="w-4 h-4 text-[#f59e0b]" />
                   <span>{t.calcReferralTitle}</span>
                 </label>
                 <button
                   type="button"
                   onClick={() => setIncludeReferral(!includeReferral)}
                   className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${
-                    includeReferral ? 'bg-[#8e1426] justify-end' : 'bg-[#e5e0d3] justify-start'
+                    includeReferral ? 'bg-[#581c87] justify-end' : 'bg-[#ede6f5] justify-start'
                   }`}
                 >
                   <div className="w-4 h-4 rounded-full bg-white shadow-xs transform transition-transform" />
                 </button>
               </div>
-              <p className="text-xs text-[#57534e] leading-relaxed">
+              <p className="text-xs text-[#5b4d6b] leading-relaxed">
                 {chitUnits === 10
                   ? t.calcReferralVipDesc
                   : t.calcReferralStandardDesc}
                 {' '}
-                <span className="text-[#8e1426] font-semibold">{t.calcReferralNote}</span>
+                <span className="text-[#6b21a8] font-semibold">{t.calcReferralNote}</span>
               </p>
             </div>
 
             {/* Formula Math Breakdown Box */}
-            <div className="p-4 rounded-lg bg-[#0f172a] text-[#e5e0d3] text-xs font-mono space-y-1.5 border border-slate-800">
-              <div className="text-[#d79628] font-bold font-sans flex items-center gap-1">
+            <div className="p-4 rounded-lg bg-[#1e0a38] text-[#e9d5ff] text-xs font-mono space-y-1.5 border border-purple-900/50">
+              <div className="text-[#fde047] font-bold font-sans flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>{t.calcFormulaTitle}</span>
               </div>
-              <div className="flex justify-between text-[#e5e0d3] pt-1">
+              <div className="flex justify-between text-[#e9d5ff] pt-1">
                 <span>{t.calcFormulaPrincipal} ({chitUnits} x ₹4,000 x 4m):</span>
                 <span className="font-bold text-white">{formatCurrency(calculations.totalPrincipal)}</span>
               </div>
-              <div className="flex justify-between text-[#d79628]">
+              <div className="flex justify-between text-[#fde047]">
                 <span>+ {t.calcFormulaInterest} (60%):</span>
                 <span className="font-bold">+{formatCurrency(calculations.interestAmount)}</span>
               </div>
@@ -203,30 +203,30 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
             </div>
           </div>
 
-          {/* Right Column: Jayasulochana High-Contrast Result Box */}
+          {/* Right Column: High-Contrast Result Box */}
           <div className="lg:col-span-6 space-y-6 font-['Source_Sans_3']">
             {/* Payout Card */}
-            <div className="rounded-lg bg-[#0f172a] text-white p-6 sm:p-8 border-l-4 border-[#d79628] shadow-md space-y-6 relative overflow-hidden">
+            <div className="rounded-xl bg-[#1e0a38] text-white p-6 sm:p-8 border-l-4 border-[#f59e0b] shadow-xl space-y-6 relative overflow-hidden">
               <div className="flex justify-between items-start">
                 <div>
-                  <span className="text-xs font-bold text-[#d79628] uppercase tracking-wider block">
+                  <span className="text-xs font-bold text-[#fde047] uppercase tracking-wider block">
                     {language === 'ta' ? '4 மாத முதிர்வு பலன்' : '4-Month Maturity Payout'}
                   </span>
                   <h3 className="font-['Playfair_Display'] text-xl font-bold text-white mt-0.5">
                     {t.calcResultLabel}
                   </h3>
                 </div>
-                <span className="px-3 py-1 rounded text-xs font-bold bg-[#d79628] text-[#2c1b1b] shadow-xs">
+                <span className="px-3 py-1 rounded-md text-xs font-bold bg-[#f59e0b] text-[#1e0a38] shadow-xs">
                   60% {language === 'ta' ? 'வட்டி' : 'Yield'}
                 </span>
               </div>
 
               {/* Huge Number Display */}
               <div>
-                <div className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#d79628] font-['Playfair_Display']">
+                <div className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#fde047] font-['Playfair_Display']">
                   {formatCurrency(calculations.totalPayout)}
                 </div>
-                <div className="text-xs text-[#e5e0d3] mt-2 flex items-center gap-2">
+                <div className="text-xs text-[#e9d5ff] mt-2 flex items-center gap-2">
                   <span>{t.colWithoutReferral}:</span>
                   <strong className="text-white font-mono">{formatCurrency(calculations.payoutWithoutReferral)}</strong>
                 </div>
@@ -234,19 +234,19 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
 
               {/* Breakdown Grid */}
               <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/15 text-center">
-                <div className="p-2.5 rounded bg-white/10 border border-white/10">
-                  <div className="text-[10px] text-[#e5e0d3]">{language === 'ta' ? 'நீங்கள் கட்டியது' : 'Your Principal'}</div>
+                <div className="p-2.5 rounded-lg bg-white/10 border border-white/10">
+                  <div className="text-[10px] text-[#e9d5ff]">{language === 'ta' ? 'நீங்கள் கட்டியது' : 'Your Principal'}</div>
                   <div className="text-xs sm:text-sm font-bold text-white font-['Playfair_Display'] mt-0.5">
                     {formatCurrency(calculations.totalPrincipal)}
                   </div>
                 </div>
-                <div className="p-2.5 rounded bg-[#8e1426]/40 border border-[#8e1426]">
-                  <div className="text-[10px] text-[#fce8b3]">{language === 'ta' ? 'நிறுவன வட்டி' : '60% Yield'}</div>
-                  <div className="text-xs sm:text-sm font-bold text-[#fce8b3] font-['Playfair_Display'] mt-0.5">
+                <div className="p-2.5 rounded-lg bg-[#581c87]/80 border border-purple-400/40">
+                  <div className="text-[10px] text-[#fde047]">{language === 'ta' ? 'நிறுவன வட்டி' : '60% Yield'}</div>
+                  <div className="text-xs sm:text-sm font-bold text-[#fde047] font-['Playfair_Display'] mt-0.5">
                     +{formatCurrency(calculations.interestAmount)}
                   </div>
                 </div>
-                <div className="p-2.5 rounded bg-emerald-500/20 border border-emerald-400/30">
+                <div className="p-2.5 rounded-lg bg-emerald-500/20 border border-emerald-400/30">
                   <div className="text-[10px] text-emerald-300">{language === 'ta' ? 'போனஸ்' : 'Bonus'}</div>
                   <div className="text-xs sm:text-sm font-bold text-emerald-400 font-['Playfair_Display'] mt-0.5">
                     +{formatCurrency(calculations.referralBonusAmount)}
@@ -255,12 +255,12 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
               </div>
 
               {/* Comparison vs Bank RD */}
-              <div className="p-4 rounded bg-white/5 border border-white/10 space-y-2">
-                <div className="flex justify-between text-xs text-[#e5e0d3]">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-2">
+                <div className="flex justify-between text-xs text-[#e9d5ff]">
                   <span>{t.calcBankRdLabel}</span>
-                  <span className="font-mono text-slate-300">{formatCurrency(calculations.bankRdTotal)}</span>
+                  <span className="font-mono text-purple-200">{formatCurrency(calculations.bankRdTotal)}</span>
                 </div>
-                <div className="flex justify-between text-xs font-bold text-[#d79628]">
+                <div className="flex justify-between text-xs font-bold text-[#fde047]">
                   <span>{t.calcDfinanceLabel}</span>
                   <span className="font-['Playfair_Display'] text-base">{formatCurrency(calculations.totalPayout)}</span>
                 </div>
@@ -288,20 +288,20 @@ export const ChitCalculator: React.FC<ChitCalculatorProps> = ({ onEnrollPlan, on
                       hasReferral: includeReferral,
                     })
                   }
-                  className="w-full py-3.5 px-6 rounded bg-[#8e1426] hover:bg-[#720f1e] text-white font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all hover:scale-[1.01]"
+                  className="w-full py-3.5 px-6 rounded-lg bg-[#581c87] hover:bg-[#4c1d95] text-white font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all hover:scale-[1.01] border border-[#f59e0b]/40"
                 >
-                  <Gift className="w-4 h-4 text-[#d79628]" />
+                  <Gift className="w-4 h-4 text-[#fde047]" />
                   <span>{t.calcBtnEnroll} ({chitUnits} {chitUnits === 1 ? 'Chit' : 'Chits'})</span>
-                  <ArrowRight className="w-4 h-4 text-[#d79628]" />
+                  <ArrowRight className="w-4 h-4 text-[#fde047]" />
                 </button>
 
                 {onOpenCircular && (
                   <button
                     type="button"
                     onClick={onOpenCircular}
-                    className="w-full py-2.5 px-4 rounded text-xs text-[#d79628] hover:text-white font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="w-full py-2.5 px-4 rounded-lg text-xs text-[#fde047] hover:text-white font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
-                    <FileText className="w-3.5 h-3.5 text-[#d79628]" />
+                    <FileText className="w-3.5 h-3.5 text-[#f59e0b]" />
                     <span>{t.calcBtnCircular}</span>
                   </button>
                 )}

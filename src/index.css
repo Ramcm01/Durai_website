@@ -2,18 +2,23 @@
 
 @layer base {
   :root {
-    --primary-crimson: #8e1426;
-    --primary-crimson-dark: #720f1e;
-    --primary-crimson-light: rgba(142, 20, 38, 0.08);
-    --accent-gold: #d79628;
-    --accent-gold-light: rgba(215, 150, 40, 0.15);
-    --bg-ivory: #faf8f4;
-    --bg-ivory-alt: #f4f0e8;
-    --border-warm: #e5e0d3;
-    --dark-navy: #0f172a;
-    --dark-navy-card: #162238;
-    --text-primary: #2c1b1b;
-    --text-muted: #57534e;
+    --primary-purple: #4c1d95;
+    --primary-purple-dark: #3b0764;
+    --primary-purple-light: rgba(76, 29, 149, 0.08);
+    --primary-purple-accent: #6b21a8;
+    --primary-crimson: #581c87;
+    --primary-crimson-dark: #3b0764;
+    --primary-crimson-light: rgba(88, 28, 135, 0.08);
+    --accent-gold: #f59e0b;
+    --accent-gold-light: rgba(245, 158, 11, 0.15);
+    --accent-yellow: #fde047;
+    --bg-ivory: #faf7fd;
+    --bg-ivory-alt: #f3ecf9;
+    --border-warm: #ebdcf9;
+    --dark-navy: #140727;
+    --dark-navy-card: #220d3f;
+    --text-primary: #210d37;
+    --text-muted: #5b4d6b;
   }
 
   body {
@@ -39,22 +44,22 @@
   font-family: 'Dancing Script', cursive;
 }
 
-/* Stat ring style matching jayasulochanachits.com */
+/* Stat ring style matching royal purple brand */
 .stat-ring {
   border-radius: 9999px;
-  border: 3px solid #d79628;
+  border: 3px solid #f59e0b;
   position: relative;
   transition: all 0.3s ease;
 }
 
 .stat-ring:hover {
-  border-color: #8e1426;
+  border-color: #581c87;
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(142, 20, 38, 0.2);
+  box-shadow: 0 10px 25px -5px rgba(88, 28, 135, 0.25);
 }
 
 /* Gold separator gradient */
 .gold-divider {
   height: 2px;
-  background: linear-gradient(90deg, transparent, #d79628, transparent);
+  background: linear-gradient(90deg, transparent, #f59e0b, transparent);
 }

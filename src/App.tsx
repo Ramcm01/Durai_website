@@ -74,7 +74,7 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf8f4] text-[#2c1b1b] flex flex-col font-['Source_Sans_3'] antialiased selection:bg-[#d79628] selection:text-white">
+    <div className="min-h-screen bg-[#faf7fd] text-[#1e0a38] flex flex-col font-['Source_Sans_3'] antialiased selection:bg-[#f59e0b] selection:text-[#1e0a38]">
       {/* Sticky Header */}
       <Header
         onOpenQuickPay={() => setQuickPayOpen(true)}
@@ -139,20 +139,20 @@ function AppContent() {
         <button
           type="button"
           onClick={toggleLanguage}
-          className="flex items-center gap-1.5 bg-white hover:bg-[#faf8f4] text-[#8e1426] px-3.5 py-2 rounded-full shadow-md border border-[#e5e0d3] transition-all cursor-pointer font-semibold text-xs"
+          className="flex items-center gap-1.5 bg-white hover:bg-[#faf7fd] text-[#581c87] px-3.5 py-2 rounded-full shadow-md border border-[#ede6f5] transition-all cursor-pointer font-semibold text-xs"
           title="Switch Language / மொழி மாற்றுக"
         >
-          <Globe className="w-4 h-4 text-[#8e1426]" />
+          <Globe className="w-4 h-4 text-[#581c87]" />
           <span>{language === 'ta' ? 'English (EN)' : 'தமிழ் (TA)'}</span>
         </button>
 
         <button
           type="button"
           onClick={() => setCircularModalOpen(true)}
-          className="flex items-center gap-2 bg-[#8e1426] hover:bg-[#720f1e] text-white px-3.5 py-2.5 rounded-full shadow-md border border-[#d79628]/50 transition-all cursor-pointer font-semibold text-xs"
+          className="flex items-center gap-2 bg-[#581c87] hover:bg-[#4c1d95] text-white px-3.5 py-2.5 rounded-full shadow-md border border-[#f59e0b]/50 transition-all cursor-pointer font-semibold text-xs"
           title="View Official Scheme Circular"
         >
-          <FileText className="w-4 h-4 text-[#d79628]" />
+          <FileText className="w-4 h-4 text-[#fde047]" />
           <span className="hidden sm:inline">PDF Circular (Tamil / Eng)</span>
         </button>
 

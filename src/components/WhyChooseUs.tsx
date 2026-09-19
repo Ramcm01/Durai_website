@@ -60,40 +60,40 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section id="why-us" className="py-20 bg-white border-b border-[#e5e0d3] relative">
+    <section id="why-us" className="py-20 bg-white border-b border-[#ede6f5] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#8e1426] bg-[#8e1426]/10 px-3.5 py-1.5 rounded font-['Source_Sans_3'] mb-3">
-            <Sparkles className="w-4 h-4 text-[#8e1426]" />
+          <div className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#581c87] bg-purple-100 px-3.5 py-1.5 rounded-full font-['Source_Sans_3'] mb-3 border border-purple-200">
+            <Sparkles className="w-4 h-4 text-[#581c87]" />
             <span>{t.whyPill}</span>
           </div>
-          <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2c1b1b] tracking-tight">
+          <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1e0a38] tracking-tight">
             {t.whyTitle}
           </h2>
           <div className="gold-divider max-w-xs mx-auto my-4" />
-          <p className="text-base text-[#57534e] font-medium font-['Source_Sans_3'] leading-relaxed">
+          <p className="text-base text-[#5b4d6b] font-medium font-['Source_Sans_3'] leading-relaxed">
             {t.whySubtitle}
           </p>
         </div>
 
-        {/* 6 Grid Cards styled strictly like jayasulochanachits.com */}
+        {/* 6 Grid Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 font-['Source_Sans_3']">
           {advantages.map((adv, idx) => {
             const Icon = adv.icon;
             return (
               <div
                 key={idx}
-                className="p-6 rounded-lg bg-white border border-[#e5e0d3] hover:border-[#8e1426]/50 transition-all duration-200 hover:shadow-md flex flex-col justify-between group"
+                className="p-6 rounded-xl bg-white border border-[#ede6f5] hover:border-[#581c87]/60 transition-all duration-200 hover:shadow-md flex flex-col justify-between group"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-lg bg-[#8e1426]/10 text-[#8e1426] group-hover:bg-[#8e1426] group-hover:text-white flex items-center justify-center mb-4 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-purple-100 text-[#581c87] group-hover:bg-[#581c87] group-hover:text-white flex items-center justify-center mb-4 transition-colors">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#2c1b1b] mb-2 group-hover:text-[#8e1426] transition-colors">
+                  <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1e0a38] mb-2 group-hover:text-[#581c87] transition-colors">
                     {adv.title}
                   </h3>
-                  <p className="text-sm text-[#57534e] leading-relaxed">
+                  <p className="text-sm text-[#5b4d6b] leading-relaxed">
                     {adv.desc}
                   </p>
                 </div>
@@ -103,23 +103,23 @@ export const WhyChooseUs: React.FC = () => {
         </div>
 
         {/* Office Trust Banner with Proprietor Guarantee */}
-        <div className="rounded-lg bg-[#faf8f4] p-6 sm:p-8 border border-[#d79628]/60 shadow-xs">
+        <div className="rounded-xl bg-[#faf7fd] p-6 sm:p-8 border border-[#f59e0b]/50 shadow-xs">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center font-['Source_Sans_3']">
             <div className="lg:col-span-8 space-y-2">
-              <span className="text-[#8e1426] font-bold text-xs uppercase tracking-widest block">
+              <span className="text-[#581c87] font-bold text-xs uppercase tracking-widest block">
                 {language === 'ta' ? 'அதிகாரப்பூர்வ உத்தரவாதம்' : 'Official Guarantee'}
               </span>
-              <h3 className="font-['Playfair_Display'] text-xl sm:text-2xl font-bold text-[#2c1b1b]">
+              <h3 className="font-['Playfair_Display'] text-xl sm:text-2xl font-bold text-[#1e0a38]">
                 {t.whyTrustTitle}
               </h3>
-              <p className="text-xs sm:text-sm text-[#57534e] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#5b4d6b] leading-relaxed">
                 {t.whyTrustDesc}
               </p>
             </div>
-            <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-center p-4 rounded-lg bg-white border border-[#e5e0d3]">
-              <span className="text-xs text-[#57534e]">{language === 'ta' ? 'நிர்வாக உரிமையாளர்' : 'Managing Proprietor'}</span>
-              <span className="font-['Playfair_Display'] text-lg font-bold text-[#8e1426] mt-0.5">{COMPANY_INFO.proprietor}</span>
-              <span className="text-xs text-[#2c1b1b] mt-1 font-semibold">{COMPANY_INFO.phone}</span>
+            <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-center p-4 rounded-xl bg-white border border-[#ede6f5]">
+              <span className="text-xs text-[#5b4d6b]">{language === 'ta' ? 'நிர்வாக உரிமையாளர்' : 'Managing Proprietor'}</span>
+              <span className="font-['Playfair_Display'] text-lg font-bold text-[#581c87] mt-0.5">{COMPANY_INFO.proprietor}</span>
+              <span className="text-xs text-[#1e0a38] mt-1 font-semibold">{COMPANY_INFO.phone}</span>
             </div>
           </div>
         </div>
