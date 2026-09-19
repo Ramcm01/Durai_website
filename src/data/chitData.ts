@@ -15,6 +15,8 @@ export const COMPANY_INFO = {
   secondaryPhone: '8668197626',
   whatsappNumber: '919003241939',
   email: 'contact@dfinance.in',
+  chitAdminEmail: 'durai.vodafone@gmail.com',
+  chitCcEmail: 'advt.team@gmail.com',
   aadhaarNo: '5527 5993 9866',
   udyamRegNo: 'UDYAM-TN-02-0501215',
   officeHours: 'Monday – Saturday: 9:00 AM – 8:00 PM | Sunday: 10:00 AM – 3:00 PM',

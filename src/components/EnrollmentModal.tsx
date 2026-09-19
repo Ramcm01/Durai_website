@@ -11,7 +11,11 @@ import {
   MapPin,
   FileText,
   Calendar,
-  Building2
+  Building2,
+  Mail,
+  Copy,
+  ExternalLink,
+  Check
 } from 'lucide-react';
 import { CHIT_SCHEMES, COMPANY_INFO } from '../data/chitData';
 
@@ -46,6 +50,7 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [applicationId, setApplicationId] = useState('');
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
     if (calculatorPreFill) {
@@ -86,11 +91,64 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
     }).format(val);
   };
 
+  const getEmailDetails = (appId: string) => {
+    const subject = `[DFinance Chit Application] ${formData.fullName} - ${chitUnits} Chit(s) (${appId})`;
+    const body = `NEW 4-MONTH FESTIVAL CHIT ENROLLMENT APPLICATION
+D FINANCE CHIT COMPANY - CHROMEPET, CHENNAI
+
+Application ID: ${appId}
+Submission Date: ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+
+1. SUBSCRIBER PARTICULARS:
+--------------------------------------------------
+Full Name: ${formData.fullName}
+Mobile / WhatsApp: ${formData.phone}
+${formData.email ? `Email: ${formData.email}\n` : ''}Residential Address: ${formData.address}
+
+2. CHIT SCHEME DETAILS:
+--------------------------------------------------
+Scheme: Deepavali - Pongal 4-Month Festival Chit Scheme
+Enrolled Units: ${chitUnits} Chit(s) (1 to 10 Chits)
+Monthly Installment: ${formatCurrency(monthlyInstallment)} / month
+Total 4-Month Principal: ${formatCurrency(totalPrincipal)}
+60% High-Yield Bonus: ${formatCurrency(interestAmount)}
+${includeReferral ? `Referral Group Incentive: ${formatCurrency(referralBonus)}\n` : ''}Total Expected Maturity Payout: ${formatCurrency(totalMaturityPayout)}
+Joining Date: ${formData.joiningDate}
+Maturity Date: ${calculateMaturityDate(formData.joiningDate)}
+
+3. CONSENT & DECLARATION:
+--------------------------------------------------
+Declaration: "இத்திட்டத்தில் முழுமனதுடன் இணைய நாங்கள் தயாராக உள்ளோம்." (Agreed with full consent)
+
+4. DFINANCE OFFICE DETAILS:
+--------------------------------------------------
+Office: No. 12, First New Street, Lakshmi Puram, Chromepet, Chennai - 600 044
+Proprietor: Mr. Duraibabu
+Phone: 9003241939 / 8668197626
+Govt Udyam Reg: UDYAM-TN-02-0501215
+
+--------------------------------------------------
+Submitted via DFinance Web Application Portal.`;
+
+    const mailtoUrl = `mailto:${COMPANY_INFO.chitAdminEmail}?cc=${COMPANY_INFO.chitCcEmail}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(COMPANY_INFO.chitAdminEmail)}&cc=${encodeURIComponent(COMPANY_INFO.chitCcEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    return { subject, body, mailtoUrl, gmailWebUrl };
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const generatedId = 'DF-APP-' + Math.floor(100000 + Math.random() * 900000);
     setApplicationId(generatedId);
     setIsSubmitted(true);
+
+    // Auto-trigger mail client to send mail to durai.vodafone@gmail.com and CC to advt.team@gmail.com
+    const emailDetails = getEmailDetails(generatedId);
+    try {
+      window.location.href = emailDetails.mailtoUrl;
+    } catch {
+      // Fallback handled by interactive UI cards
+    }
   };
 
   const handleClose = () => {
@@ -239,17 +297,32 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                   </div>
                 </div>
 
-                <div>
-                  <label className="block font-bold text-[#1e0a38] mb-1">
-                    முகவரி (Address / Area in Chennai)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    placeholder="e.g., Lakshmi Puram, Chromepet, Chennai - 44"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-bold text-[#1e0a38] mb-1">
+                      மின்னஞ்சல் (Email Address - Optional)
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="e.g., yourname@gmail.com"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-[#1e0a38] mb-1">
+                      முகவரி (Address / Area in Chennai)
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.address}
+                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                      placeholder="e.g., Lakshmi Puram, Chromepet, Chennai - 44"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-[#ede6f5] focus:outline-none focus:border-[#581c87] text-[#1e0a38] bg-[#faf7fd]"
+                    />
+                  </div>
                 </div>
 
                 {/* Statutory Pledge From Document */}
@@ -285,24 +358,25 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
             </form>
           ) : (
             /* Success View */
-            <div className="text-center py-6 space-y-5">
-              <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-8 h-8" />
+            <div className="text-center py-4 space-y-3.5">
+              <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-7 h-7" />
               </div>
 
               <div>
-                <span className="text-xs font-mono font-bold text-[#5b4d6b] uppercase tracking-wider block">
-                  Application Registered Successfully
+                <span className="text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 uppercase tracking-wider inline-block">
+                  ✓ Application Registered & Email Generated
                 </span>
-                <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1e0a38] mt-1">
+                <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#1e0a38] mt-1.5">
                   Welcome to DFinance!
                 </h3>
-                <p className="text-xs text-[#5b4d6b] mt-1">
-                  Your application reference ID: <strong className="text-[#1e0a38] font-mono">{applicationId}</strong>
+                <p className="text-xs text-[#5b4d6b] mt-0.5">
+                  Application Reference ID: <strong className="text-[#1e0a38] font-mono">{applicationId}</strong>
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#faf7fd] border border-[#ede6f5] text-xs text-left space-y-2">
+              {/* Application Details Summary */}
+              <div className="p-3.5 rounded-xl bg-[#faf7fd] border border-[#ede6f5] text-xs text-left space-y-1.5">
                 <div className="flex justify-between">
                   <span className="text-[#5b4d6b]">Applicant Name:</span>
                   <span className="font-bold text-[#1e0a38]">{formData.fullName}</span>
@@ -319,18 +393,78 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                   <span className="text-[#5b4d6b]">Total Expected Payout:</span>
                   <span className="font-black text-[#581c87] text-sm">{formatCurrency(totalMaturityPayout)}</span>
                 </div>
-                <div className="pt-2 border-t border-[#ede6f5] text-[11px] text-[#5b4d6b]">
-                  DFinance Office: <strong>{COMPANY_INFO.shortAddress}</strong>. Call: <strong>{COMPANY_INFO.phone}</strong>.
-                </div>
               </div>
 
+              {/* Email Dispatch Card */}
+              {(() => {
+                const emailDetails = getEmailDetails(applicationId);
+                return (
+                  <div className="p-3.5 rounded-xl bg-purple-50/80 border border-purple-200 text-left space-y-2.5">
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-[#581c87] text-[#fde047] flex items-center justify-center shrink-0 mt-0.5">
+                        <Mail className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs font-bold text-[#1e0a38]">Chit Application Email Prepared</div>
+                        <div className="text-[11px] text-[#5b4d6b] leading-tight mt-0.5">
+                          To: <strong className="text-[#581c87] font-mono">{COMPANY_INFO.chitAdminEmail}</strong><br />
+                          CC: <strong className="text-[#581c87] font-mono">{COMPANY_INFO.chitCcEmail}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5">
+                      <a
+                        href={emailDetails.mailtoUrl}
+                        className="py-2 px-3 rounded-lg bg-[#581c87] hover:bg-[#4c1d95] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                      >
+                        <Mail className="w-3.5 h-3.5" />
+                        <span>Send via Mail App</span>
+                      </a>
+
+                      <a
+                        href={emailDetails.gmailWebUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="py-2 px-3 rounded-lg bg-white border border-[#581c87] text-[#581c87] hover:bg-purple-100 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>Open in Gmail Web</span>
+                      </a>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(emailDetails.body);
+                        setCopiedEmail(true);
+                        setTimeout(() => setCopiedEmail(false), 3000);
+                      }}
+                      className="w-full py-1.5 px-3 rounded-lg border border-purple-200 bg-white hover:bg-purple-100/70 text-[11px] font-semibold text-[#581c87] flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                    >
+                      {copiedEmail ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                          <span className="text-emerald-700 font-bold">✓ Application Details Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5 text-[#581c87]" />
+                          <span>Copy Full Application Text</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                );
+              })()}
+
               {/* Direct WhatsApp Confirmation Button */}
-              <div className="space-y-2">
+              <div className="space-y-2 pt-0.5">
                 <a
                   href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md"
+                  className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md"
                 >
                   <Smartphone className="w-4 h-4" />
                   <span>Send Confirmation to DFinance WhatsApp (+91 {COMPANY_INFO.phone})</span>
@@ -339,7 +473,7 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="w-full py-2.5 px-4 rounded-xl border border-[#ede6f5] text-[#5b4d6b] hover:bg-purple-50 text-xs font-semibold cursor-pointer"
+                  className="w-full py-2 px-4 rounded-xl border border-[#ede6f5] text-[#5b4d6b] hover:bg-purple-50 text-xs font-semibold cursor-pointer"
                 >
                   Done
                 </button>

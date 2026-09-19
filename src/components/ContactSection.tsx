@@ -6,7 +6,8 @@ import {
   Smartphone, 
   Send, 
   CheckCircle2, 
-  Building2
+  Building2,
+  Mail
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/chitData';
 
@@ -19,9 +20,38 @@ export const ContactSection: React.FC = () => {
     message: '',
   });
 
+  const [inquiryEmailDetails, setInquiryEmailDetails] = useState<{ mailtoUrl: string; to: string; cc: string } | null>(null);
+
   const handleInquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const subject = `[DFinance Chit Inquiry] ${inquiry.name} (${inquiry.units})`;
+    const body = `CHIT SCHEME INQUIRY - DFINANCE CHROMEPET
+Date: ${new Date().toLocaleDateString('en-IN')}
+
+Sender Details:
+----------------------------------------
+Name: ${inquiry.name}
+Phone: ${inquiry.phone}
+Interested Plan: ${inquiry.units}
+Message: ${inquiry.message || 'No additional note'}
+
+----------------------------------------
+Sent via DFinance Online Web Portal.`;
+
+    const mailtoUrl = `mailto:${COMPANY_INFO.chitAdminEmail}?cc=${COMPANY_INFO.chitCcEmail}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setInquiryEmailDetails({
+      mailtoUrl,
+      to: COMPANY_INFO.chitAdminEmail,
+      cc: COMPANY_INFO.chitCcEmail,
+    });
     setFormSent(true);
+
+    try {
+      window.location.href = mailtoUrl;
+    } catch {
+      // Handled in UI
+    }
+
     setTimeout(() => {
       setFormSent(false);
       setInquiry({
@@ -30,7 +60,7 @@ export const ContactSection: React.FC = () => {
         units: '1 Chit (₹4,000/mo)',
         message: '',
       });
-    }, 4000);
+    }, 8000);
   };
 
   return (
@@ -137,12 +167,23 @@ export const ContactSection: React.FC = () => {
             </p>
 
             {formSent ? (
-              <div className="p-6 bg-emerald-50 border border-emerald-300 rounded-xl text-center space-y-2">
+              <div className="p-6 bg-emerald-50 border border-emerald-300 rounded-xl text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                <h4 className="font-bold text-[#1e0a38] text-base">Inquiry Received!</h4>
+                <h4 className="font-bold text-[#1e0a38] text-base">Inquiry Prepared & Dispatched!</h4>
                 <p className="text-xs text-[#5b4d6b]">
-                  Mr. Duraibabu or our Chromepet office team will call you back within 2 hours.
+                  Your inquiry has been routed to <strong>{COMPANY_INFO.chitAdminEmail}</strong> (CC: <strong>{COMPANY_INFO.chitCcEmail}</strong>). Mr. Duraibabu or our Chromepet office team will call you back within 2 hours.
                 </p>
+                {inquiryEmailDetails && (
+                  <div className="pt-2">
+                    <a
+                      href={inquiryEmailDetails.mailtoUrl}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#581c87] text-white text-xs font-bold hover:bg-[#4c1d95] transition-colors"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Open in Mail App</span>
+                    </a>
+                  </div>
+                )}
               </div>
             ) : (
               <form onSubmit={handleInquirySubmit} className="space-y-4 text-xs">
